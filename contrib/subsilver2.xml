@@ -114,7 +114,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 	<action-group>
 
 		<!-- File edits -->
-		<open src="styles/subsilver/template/overall_header.html">
+		<open src="styles/subsilver2/template/overall_header.html">
 			<edit>
 				<find><![CDATA[<!-- IF S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_TOPIC} - {TOPIC_TITLE}" href="{U_FEED}?f={S_FORUM_ID}&amp;t={S_TOPIC_ID}" /><!-- ENDIF -->]]></find>
 				<inline-edit>
@@ -125,7 +125,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 			</edit>
 		</open>
 
-		<open src="styles/subsilver/template/posting_editor.html">
+		<open src="styles/subsilver2/template/posting_editor.html">
 			<edit>
 				<find><![CDATA[<td class="row2" width="78%"><input class="post" style="width:450px" type="text" name="subject" size="45" maxlength="<!-- IF S_NEW_MESSAGE -->60<!-- ELSE -->64<!-- ENDIF -->" tabindex="2" value="{SUBJECT}" /></td>
 </tr>]]></find>
@@ -133,7 +133,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 			</edit>
 		</open>
 
-		<open src="styles/subsilver/template/viewtopic_body.html">
+		<open src="styles/subsilver2/template/viewtopic_body.html">
 			<edit>
 				<find><![CDATA[<!-- IF S_TOPIC_MOD --><form method="post" action="{S_MOD_ACTION}"><span class="gensmall">{L_QUICK_MOD}:</span> {S_TOPIC_MOD} <input class="btnlite" type="submit" value="{L_GO}" /></form><!-- ENDIF -->]]></find>
 				<action type="after-add"><![CDATA[<!-- INCLUDE mods/subject_prefix/subject_prefix.html -->]]></action>
