@@ -60,6 +60,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 					<change>[Fix] #1 Can read forum set to no, in combination with the "Last Post Topic Title MOD" leaks the topics prefix.</change>
 				</changelog>
 			</entry>
+			<entry>
 				<date>2010-08-23</date>
 				<rev-version>1.2.2-b1</rev-version>
 				<changelog lang="en">
