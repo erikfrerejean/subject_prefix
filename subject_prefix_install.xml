@@ -43,7 +43,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 			</author>
 		</author-group>
 
-		<mod-version>1.2.2-b1</mod-version>
+		<mod-version>1.2.2-dev</mod-version>
 
 		<installation>
 			<level>easy</level>
@@ -52,6 +52,13 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 		</installation>
 
 		<history>
+			<entry>
+				<date>0000-00-00</date>
+				<rev-version>1.2.2-dev</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[[Fix] http://www.phpbb.com/community/viewtopic.php?f=70&t=2091731&start=195#p12848144.]]></change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2010-08-23</date>
 				<rev-version>1.2.2-b1</rev-version>

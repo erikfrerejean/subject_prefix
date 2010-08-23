@@ -84,7 +84,7 @@ abstract class sp_hook
 		$_callback = (!empty($_callback)) ? $_callback : basename(sp_phpbb::$user->page['page_name'], '.' . PHP_EXT);
 		if (method_exists('sp_hook', 'add_to_' . $_callback))
 		{
-			call_user_func('self::add_to_' . $_callback);
+			call_user_func('sp_hook::add_to_' . $_callback);
 		}
 	}
 
