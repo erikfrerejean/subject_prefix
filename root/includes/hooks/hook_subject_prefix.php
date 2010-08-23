@@ -102,11 +102,13 @@ abstract class sp_hook
 		// This MOD also supports Joas his "last post topic title MOD".
 		if (isset(sp_phpbb::$config['altt_active']) && sp_phpbb::$config['altt_active'])
 		{
-			$blockvar = 'ALTT_LINK_NAME_SHORT';
+			$blockvar	= 'ALTT_LINK_NAME_SHORT';
+			$testvar	= 'ALTT_LINK_NAME_SHORT';
 		}
 		else
 		{
-			$blockvar = 'LAST_POST_SUBJECT';
+			$blockvar	= 'LAST_POST_SUBJECT';
+			$testvar	= 'U_LAST_POST';
 		}
 
 		// To fetch the subject prefixes we'll need the last post ids
@@ -114,7 +116,7 @@ abstract class sp_hook
 		foreach (sp_phpbb::$template->_tpldata['forumrow'] as $row => $data)
 		{
 			// Need the last post link
-			if (empty($data['U_LAST_POST']))
+			if (empty($data[$testvar]))
 			{
 				continue;
 			}
