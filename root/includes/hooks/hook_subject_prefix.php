@@ -27,15 +27,34 @@ if (!isset($config['subject_prefix_version']))
 abstract class sp_hook
 {
 	/**
+	 * @var Array Array containing all hook data.
+	 */
+	static private $_hooks = array(
+		array(
+			'phpbb_user_session_handler',
+			'subject_prefix_init',
+		),
+		array(
+			array('template', 'display'),
+			'add_subject_prefix_to_page',
+		),
+		array(
+			array('template', 'display'),
+			'subject_prefix_template_hook',
+		),
+	);
+
+	/**
 	 * Register all subject prefix hooks
 	 * @param	phpbb_hook	$phpbb_hook	The phpBB hook object
 	 * @return	void
 	 */
 	static public function register(&$phpbb_hook)
 	{
-		$phpbb_hook->register('phpbb_user_session_handler', 'sp_hook::subject_prefix_init');
-		$phpbb_hook->register(array('template', 'display'), 'sp_hook::add_subject_prefix_to_page');
-		$phpbb_hook->register(array('template', 'display'), 'sp_hook::subject_prefix_template_hook');
+		foreach (self::$_hooks as $hook)
+		{
+			$phpbb_hook->register($hook[0], 'sp_hook::' . $hook[1]);
+		}
 	}
 
 	/**
