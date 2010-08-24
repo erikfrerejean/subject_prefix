@@ -58,6 +58,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 				<changelog lang="en">
 					<change><![CDATA[[Fix] http://www.phpbb.com/community/viewtopic.php?f=70&t=2091731&start=195#p12848144.]]></change>
 					<change>[Fix] #1 Can read forum set to no, in combination with the "Last Post Topic Title MOD" leaks the topics prefix.</change>
+					<change>[Fix] Correct missing HTML tag in adm/style/acp_subject_prefix.html.</change>
 				</changelog>
 			</entry>
 			<entry>
