@@ -305,6 +305,12 @@ abstract class sp_hook
 			$topic_ids_rows[$row] = $data['TOPIC_ID'];
 		}
 
+		// No topics IDs
+		if (empty($topic_ids_rows))
+		{
+			return;
+		}
+
 		$sql = 'SELECT topic_id, subject_prefix_id
 			FROM ' . TOPICS_TABLE . '
 			WHERE ' . sp_phpbb::$db->sql_in_set('topic_id', $topic_ids_rows) . '
