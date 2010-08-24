@@ -42,7 +42,7 @@
 			</author>
 		</author-group>
 
-		<mod-version>1.2.2-dev</mod-version>
+		<mod-version>1.2.2-rc1</mod-version>
 
 		<installation>
 			<level>easy</level>
@@ -52,8 +52,8 @@
 
 		<history>
 			<entry>
-				<date>0000-00-00</date>
-				<rev-version>1.2.2-dev</rev-version>
+				<date>2010-08-24</date>
+				<rev-version>1.2.2-rc1</rev-version>
 				<changelog lang="en">
 					<change><![CDATA[[Fix] http://www.phpbb.com/community/viewtopic.php?f=70&t=2091731&start=195#p12848144.]]></change>
 					<change>[Fix] #1 Can read forum set to no, in combination with the "Last Post Topic Title MOD" leaks the topics prefix.</change>
