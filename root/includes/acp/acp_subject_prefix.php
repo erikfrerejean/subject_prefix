@@ -151,7 +151,7 @@ class acp_subject_prefix
 
 				// Some common stuff
 				sp_phpbb::$template->assign_vars(array(
-					'U_SUBJECT_PREFIX_AJAX_REQUEST' => append_sid(PHPBB_ROOT_PATH . 'sp_ajax.' . PHP_EXT),
+					'U_SUBJECT_PREFIX_AJAX_REQUEST' => append_sid(PHPBB_ROOT_PATH . 'includes/mods/subject_prefix/sp_ajax.' . PHP_EXT),
 				));
 			break;
 		}
