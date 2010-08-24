@@ -59,10 +59,12 @@ $lang = array_merge($lang, array(
  * Global lang stuff
  */
 $lang = array_merge($lang, array(
-	'ACP_SUBJECT_PREFIX'				=> 'Subject Prefix',
-	'ACP_SUBJECT_PREFIX_ADD'			=> 'Create subject prefix',
-	'ACP_SUBJECT_PREFIX_EXPLAIN'		=> 'This page can be used to manage prefixes on a forum basis, by default all forums are collapsed to prevent this page from growing to big. Click on a forum name to display the prefixes that you\'ve set for this forum and edit them accordingly, you can also change the order in <em>(drag-drop)</em> in which they will be displayed.',
-	'ACP_SUBJECT_PREFIX_ADD_EXPLAIN'	=> 'On this page you can create new prefixes, or edit existing prefixes',
+	'ACP_SUBJECT_PREFIX'					=> 'Subject Prefix',
+	'ACP_SUBJECT_PREFIX_ADD'				=> 'Create subject prefix',
+	'ACP_SUBJECT_PREFIX_EXPLAIN'			=> 'This page can be used to manage prefixes on a forum basis, by default all forums are collapsed to prevent this page from growing to big. Click on a forum name to display the prefixes that you\'ve set for this forum and edit them accordingly, you can also change the order in <em>(drag-drop)</em> in which they will be displayed.',
+	'ACP_SUBJECT_PREFIX_ADD_EXPLAIN'		=> 'On this page you can create new prefixes, or edit existing prefixes',
+	'ACP_SUBJECT_PREFIX_EDIT_FORUM'			=> 'Edit forums',
+	'ACP_SUBJECT_PREFIX_EDIT_FORUM_EXPLAIN'	=> 'Here you can quickly edit forum specific settings for the Subject Prefix MOD.',
 
 	'NO_PREFIXES'		=> 'You haven\'t created any subject prefixes yet',
 	'NO_PREFIX_COLOUR'	=> 'You must provide a valid prefix colour',
