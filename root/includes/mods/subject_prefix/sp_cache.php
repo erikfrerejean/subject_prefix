@@ -85,7 +85,7 @@ class sp_cache extends cache
 
 		// Fetch from the cache
 		$sql_ary = array(
-			'SELECT'	=> 'f.forum_id, f.forum_name, sp.*, spt.prefix_order',
+			'SELECT'	=> 'f.forum_id, f.forum_name, f.force_subject_prefix, sp.*, spt.prefix_order',
 			'FROM'		=> array(
 				SUBJECT_PREFIX_TABLE		=> 'sp',
 				SUBJECT_PREFIX_FORUMS_TABLE	=> 'spt',
@@ -108,6 +108,9 @@ class sp_cache extends cache
 			{
 				$_pft['tree'][$row['forum_id']]		= array();
 				$_pft['forums'][$row['forum_id']]	= $row['forum_name'];
+
+				// Force?
+				$_pft['tree'][$row['forum_id']]['force_subject_prefix'] = ($row['force_subject_prefix'] == 0) ? false : true;
 			}
 
 			$_pft['tree'][$row['forum_id']][$row['prefix_id']] = array(
