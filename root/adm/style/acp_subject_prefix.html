@@ -49,6 +49,27 @@ var U_SUBJECT_PREFIX_AJAX_REQUEST = "{U_SUBJECT_PREFIX_AJAX_REQUEST}";
 	    {S_FORM_TOKEN}
 	</p>
     </form>
+<!-- ELSEIF S_FORUM -->
+    <h1>{L_ACP_SUBJECT_PREFIX_EDIT_FORUM}</h1>
+    <p>{L_ACP_SUBJECT_PREFIX_EDIT_FORUM_EXPLAIN}</p>
+
+    <form id="acp_subject_prefix_forum" method="post" action="{U_ACTION}">
+    <fieldset>
+	<dl>
+	    <dt><label for="forum_prefixes">{L_FORUM_PREFIXES}:</label><br /><span>{L_FORUM_PREFIXES_EXPLAIN}</span></dt>
+	    <dd><select id="forum_prefixes" name="forum_prefixes_id[]" multiple="multiple" size="10">{FORUM_PREFIXES_OPTIONS}</select></dd>
+	</dl>
+	<dl>
+	    <dt><label for="prefix_required">{L_FORUM_PREFIX_REQUIRED}:</label><br /><span>{L_FORUM_PREFIX_REQUIRED_EXPLAIN}</span></dt>
+	    <dd><input type="checkbox" <!-- IF S_PREFIX_REQUIRED -->checked="checked"<!-- ENDIF --> id="prefix_required" name="prefix_required"></dd>
+	</dl>
+	<p class="submit-buttons">
+	    <input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+	    <input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	    {S_FORM_TOKEN}
+	</p>
+    </fieldset>
+    </form>
 <!-- ELSE -->
     <h1>{L_ACP_SUBJECT_PREFIX}</h1>
     <p><!-- IF .forumrow -->{L_ACP_SUBJECT_PREFIX_EXPLAIN}<!-- ELSE -->{L_NO_PREFIXES}<!-- ENDIF --></p>

@@ -37,6 +37,32 @@ class acp_subject_prefix
 
 		switch ($mode)
 		{
+			case 'forum' :
+				$fid = request_var('fid', 0);
+
+				if (isset($_POST['submit']))
+				{
+					// Nothing yet
+				}
+
+				// Fetch the prefixes for this forum
+				$tree = $forums = array();
+				sp_phpbb::$cache->obtain_prefix_forum_tree($tree, $forums);
+
+				// Forum has no prefixes
+				if (!isset($tree[$fid]))
+				{
+					// @todo trigger notice no prefixes
+				}
+
+				// Output the page
+				sp_phpbb::$template->assign_vars(array(
+					'FORUM_PREFIXES_OPTIONS'	=> sp_core::generate_prefix_options($fid, $tree[$fid]),
+					'S_FORUM'					=> true,
+					'S_PREFIX_REQUIRED'			=> false,	// @todo <- fetch from db
+				));
+			break;
+
 			case 'add'  :
 				$pid = request_var('pid', 0);
 
@@ -128,7 +154,7 @@ class acp_subject_prefix
 						sp_phpbb::$template->assign_block_vars('forumrow', array(
 							'FORUMNAME'		=> $forums[$forum_id],
 							'FORUM_ID'		=> $forum_id,
-							'U_FORUM_EDIT'	=> (sp_phpbb::$auth->acl_get('a_subject_prefix_create')) ? $this->u_action . "&amp;mode=forum&amp;pid={$forum_id}" : false
+							'U_FORUM_EDIT'	=> (sp_phpbb::$auth->acl_get('a_subject_prefix_create')) ? $this->u_action . "&amp;mode=forum&amp;fid={$forum_id}" : false
 						));
 
 						// The prefixes
