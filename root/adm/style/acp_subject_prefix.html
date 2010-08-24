@@ -62,7 +62,7 @@ var U_SUBJECT_PREFIX_AJAX_REQUEST = "{U_SUBJECT_PREFIX_AJAX_REQUEST}";
 	<table cellspacing="1" id="prefixrowbody{forumrow.FORUM_ID}">
 	    <thead>
 		<tr class="nodrag">
-		    <th>{forumrow.FORUMNAME}</th>
+		    <th><!-- IF forumrow.U_FORUM_EDIT --><a href="{forumrow.U_FORUM_EDIT}" title="{forumrow.FORUMNAME}">{forumrow.FORUMNAME}</a><!-- ELSE -->{forumrow.FORUMNAME}<!-- ENDIF --></th>
 		    <th>{L_OPTIONS}</th>
 		</tr>
 	    </thead>

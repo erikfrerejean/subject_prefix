@@ -126,8 +126,9 @@ class acp_subject_prefix
 					{
 						// The forum block
 						sp_phpbb::$template->assign_block_vars('forumrow', array(
-							'FORUMNAME'	=> $forums[$forum_id],
-							'FORUM_ID'	=> $forum_id,
+							'FORUMNAME'		=> $forums[$forum_id],
+							'FORUM_ID'		=> $forum_id,
+							'U_FORUM_EDIT'	=> (sp_phpbb::$auth->acl_get('a_subject_prefix_create')) ? $this->u_action . "&amp;mode=forum&amp;pid={$forum_id}" : false
 						));
 
 						// The prefixes
