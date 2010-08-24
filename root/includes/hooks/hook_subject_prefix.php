@@ -209,6 +209,12 @@ abstract class sp_hook
 			}
 		}
 
+		// No?
+		if (empty($row_id))
+		{
+			return;
+		}
+
 		// Fetch the prefixes
 		$sql = 'SELECT topic_id, subject_prefix_id
 			FROM ' . TOPICS_TABLE . '
