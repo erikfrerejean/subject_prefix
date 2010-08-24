@@ -124,6 +124,12 @@ abstract class sp_hook
 			$last_post_ids[$row] = substr(strrchr($data['U_LAST_POST'], 'p'), 1);
 		}
 
+		// Nothing to see here please walk on and mind your own business.
+		if (empty($last_post_ids))
+		{
+			return;
+		}
+
 		// Get the prefixes
 		$sql = 'SELECT topic_last_post_id, subject_prefix_id
 			FROM ' . TOPICS_TABLE . '
