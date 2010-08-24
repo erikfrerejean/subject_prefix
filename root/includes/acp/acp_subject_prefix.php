@@ -55,11 +55,23 @@ class acp_subject_prefix
 					// @todo trigger notice no prefixes
 				}
 
+				// Gen the options
+				$_prefix_options = $selected = array();
+				foreach ($tree[$fid] as $pid)
+				{
+					$selected[] = $pid['prefix_id'];
+				}
+
+				foreach ($tree[$fid] as $prefix)
+				{
+					$_prefix_options[] = "<option value='{$prefix['prefix_id']}'" . ((in_array($prefix['prefix_id'], $selected)) ? " selected='selected'" : '') . " style='color: {$prefix['prefix_colour']};'>" . sp_core::generate_prefix_string($prefix['prefix_id'], false) . '</option>';
+				}
+
 				// Output the page
 				sp_phpbb::$template->assign_vars(array(
-					'FORUM_PREFIXES_OPTIONS'	=> sp_core::generate_prefix_options($fid, $tree[$fid]),
+					'FORUM_PREFIXES_OPTIONS'	=> implode('', $_prefix_options),
 					'S_FORUM'					=> true,
-					'S_PREFIX_REQUIRED'			=> false,	// @todo <- fetch from db
+					'S_PREFIX_REQUIRED'			=> $forums[$fid]['force_prefix'],
 				));
 			break;
 
@@ -158,7 +170,7 @@ class acp_subject_prefix
 						));
 
 						// The prefixes
-						foreach ($prefixes as $prefix)
+						foreach ($prefixes as $key => $prefix)
 						{
 							sp_phpbb::$template->assign_block_vars('forumrow.prefixrow', array(
 								'PREFIX_ID'		=> $prefix['prefix_id'],
