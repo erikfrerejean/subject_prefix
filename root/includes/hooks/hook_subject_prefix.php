@@ -27,15 +27,34 @@ if (!isset($config['subject_prefix_version']))
 abstract class sp_hook
 {
 	/**
+	 * @var Array Array containing all hook data.
+	 */
+	static private $_hooks = array(
+		array(
+			'phpbb_user_session_handler',
+			'subject_prefix_init',
+		),
+		array(
+			array('template', 'display'),
+			'add_subject_prefix_to_page',
+		),
+		array(
+			array('template', 'display'),
+			'subject_prefix_template_hook',
+		),
+	);
+
+	/**
 	 * Register all subject prefix hooks
 	 * @param	phpbb_hook	$phpbb_hook	The phpBB hook object
 	 * @return	void
 	 */
 	static public function register(&$phpbb_hook)
 	{
-		$phpbb_hook->register('phpbb_user_session_handler', 'sp_hook::subject_prefix_init');
-		$phpbb_hook->register(array('template', 'display'), 'sp_hook::add_subject_prefix_to_page');
-		$phpbb_hook->register(array('template', 'display'), 'sp_hook::subject_prefix_template_hook');
+		foreach (self::$_hooks as $hook)
+		{
+			$phpbb_hook->register($hook[0], 'sp_hook::' . $hook[1]);
+		}
 	}
 
 	/**
@@ -122,6 +141,12 @@ abstract class sp_hook
 			}
 
 			$last_post_ids[$row] = substr(strrchr($data['U_LAST_POST'], 'p'), 1);
+		}
+
+		// Nothing to see here please walk on and mind your own business.
+		if (empty($last_post_ids))
+		{
+			return;
 		}
 
 		// Get the prefixes
@@ -305,6 +330,12 @@ abstract class sp_hook
 			$topic_ids_rows[$row] = $data['TOPIC_ID'];
 		}
 
+		// No topics IDs
+		if (empty($topic_ids_rows))
+		{
+			return;
+		}
+
 		$sql = 'SELECT topic_id, subject_prefix_id
 			FROM ' . TOPICS_TABLE . '
 			WHERE ' . sp_phpbb::$db->sql_in_set('topic_id', $topic_ids_rows) . '
@@ -333,25 +364,31 @@ abstract class sp_hook
 		global $viewtopic_url, $topic_data;
 
 		// Add to the page title
-		$page_title		= sp_phpbb::$template->_tpldata['.'][0]['PAGE_TITLE'];
-		$page_prefix	= sp_core::generate_prefix_string($topic_data['subject_prefix_id'], false);
-		if (sp_core::PHPBB3_SEO_TITLE_MOD === true)
+		if (!empty(sp_phpbb::$template->_tpldata['.'][0]['PAGE_TITLE']))
 		{
-			$page_title	= ($page_prefix === false) ? $page_title : $page_prefix . ' ' . $page_title;
+			$page_title		= sp_phpbb::$template->_tpldata['.'][0]['PAGE_TITLE'];
+			$page_prefix	= sp_core::generate_prefix_string($topic_data['subject_prefix_id'], false);
+			if (sp_core::PHPBB3_SEO_TITLE_MOD === true)
+			{
+				$page_title	= ($page_prefix === false) ? $page_title : $page_prefix . ' ' . $page_title;
+			}
+			else
+			{
+				$page_title = (strpos($page_title, '-') !== false) ? substr_replace($page_title, ' ' . $page_prefix, strpos($page_title, '-') + 1, 0) : $page_title;
+			}
+			sp_phpbb::$template->assign_var('PAGE_TITLE', $page_title);
+			sp_phpbb::$template->assign_var('PAGE_TITLE', $page_title);
 		}
-		else
-		{
-			$page_title = substr_replace($page_title, ' ' . $page_prefix, strpos($page_title, '-') + 1, 0);
-		}
-		sp_phpbb::$template->assign_var('PAGE_TITLE', $page_title);
-		sp_phpbb::$template->assign_var('PAGE_TITLE', $page_title);
 
 		// Add to the topic title
-		$topic_title	= sp_phpbb::$template->_tpldata['.'][0]['TOPIC_TITLE'];
-		$topic_prefix	= sp_core::generate_prefix_string($topic_data['subject_prefix_id']);
-		sp_phpbb::$template->assign_var('FEED_TOPIC_TITLE', $topic_title);		// A small fix for topic feeds (#11)
-		$topic_title = ($topic_prefix === false) ? $topic_title : $topic_prefix . ' ' . $topic_title;
-		sp_phpbb::$template->assign_var('TOPIC_TITLE', $topic_title);
+		if (!empty(sp_phpbb::$template->_tpldata['.'][0]['TOPIC_TITLE']))
+		{
+			$topic_title	= sp_phpbb::$template->_tpldata['.'][0]['TOPIC_TITLE'];
+			$topic_prefix	= sp_core::generate_prefix_string($topic_data['subject_prefix_id']);
+			sp_phpbb::$template->assign_var('FEED_TOPIC_TITLE', $topic_title);		// A small fix for topic feeds (#11)
+			$topic_title = ($topic_prefix === false) ? $topic_title : $topic_prefix . ' ' . $topic_title;
+			sp_phpbb::$template->assign_var('TOPIC_TITLE', $topic_title);
+		}
 
 		// The quick MOD box
 		if (sp_phpbb::$auth->acl_get('m_subject_prefix', $forum_id))

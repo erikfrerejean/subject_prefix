@@ -637,167 +637,147 @@ jQuery.fn.extend(
  * The Subject prefix javascript stuff
  * This is build around all above libraries
  */
-var cookieName = 'acpprefixcollapsed';
+jQuery.subjectPrefix = {
+    // The cookie name
+    cookieName: 'acpprefixcollapsed',
 
-$(document).ready(function() {
-    // Hide all tables
-    $('#main > table').each(function(index) {
-        hidePrefixTable(this);
+    bind: function()
+    {
+        // Hide all tables
+        jQuery('#main > table').each(function(index) {
+            jQuery.subjectPrefix.hidePrefixTable(this);
 
-        // Bind the onclick to the th
-        $('thead > tr > th:first', this).click(function() {
-            displayPrefixTable(this);
+            // Bind the onclick to the th
+            jQuery('thead > tr > th:first', this).click(function() {
+                jQuery.subjectPrefix.displayPrefixTable(this);
+            });
+
+            // The move buttons break due to the drag-drop stuff, disable them
+            jQuery('.moveButtons', this).remove();
+            jQuery('.moveButtons', this).parent().css('width', 40);
+
+            // Load drag drop
+            jQuery.subjectPrefix.initDragDrop(this);
         });
 
-        // The move buttons break due to the drag-drop stuff, disable them
-        $('.moveButtons', this).remove();
-        $('.moveButtons', this).parent().css('width', 40);
+        // Can I haz cookie
+        var showObject = null;
+        var cookie = jQuery.cookie(jQuery.subjectPrefix.cookieName);
+        if (!cookie)
+        {
+            showObject = jQuery('#main table:first');
+        }
+        else
+        {
+            // Yes, restore the last displayed list
+            showObject = jQuery('#main > #' + cookie);
+        }
 
+        jQuery.subjectPrefix.displayPrefixTable(showObject, true);
+
+        // Red black, Blue brown, Yellow crimson, Green orange
+        // Purple pink, Violet white, White white
+        jQuery('#prefix_colour').change(function() {
+            // Make sure the preview is displayed
+            if (jQuery('#prefixColourPreview').css('display') == 'none')
+            {
+                jQuery('#prefixColourPreview').css('display', 'inline');
+            }
+
+            jQuery('#prefixColourPreview').css('background-color', '#' + jQuery(this).val());
+        });
+    },
+
+    initDragDrop: function(table)
+    {
         // Init drag-drop
-        $(this).tableDnD({
+        jQuery(table).tableDnD({
             onDragClass	: 'row3',
             onDrop	: function(table, row) {
                 // Fix row colouring
                 var rowClassCorrect	= '';
                 var rowClassIncorrect	= '';
 
-                $('tbody > tr', table).each(function(index) {
-                    fixColouring(this, index);
+                jQuery('tbody > tr', table).each(function(index) {
+                    jQuery.subjectPrefix.fixColouring(this, index);
                 });
 
                 // Now send this change to the server so we can store it ^^
-                $.ajax({
+                jQuery.ajax({
                     type    : 'POST',
-                    url     : U_SUBJECT_PREFIX_AJAX_REQUEST + '&ajax_mode=move&tablename=' + $(table).attr('id'),
-                    data    : $.tableDnD.serialize(),
+                    url     : U_SUBJECT_PREFIX_AJAX_REQUEST + '&ajax_mode=move&tablename=' + jQuery(table).attr('id'),
+                    data    : jQuery.tableDnD.serialize(),
                     success : function(html) {
                         // Show the message
                         if (html == 'success')
-                            $('.successbox').show();
-                        },
+                            jQuery('.successbox').show();
+                    }
                 });
-            },
+            }
         });
-    });
+    },
 
-    // Can I haz cookie
-    var showObject = null;
-    var cookie = $.cookie(cookieName);
-    if (!cookie)
+    fixColouring: function(ele, index)
     {
-        showObject = $('#main table:first');
-    }
-    else
-    {
-        // Yes, restore the last displayed list
-        showObject = $('#main > #' + cookie);
-    }
+        rowClassCorrect	= (index % 2 == 0) ? 'row1' : 'row2';
+        rowClassIncorrect	= (index % 2 == 0) ? 'row2' : 'row1';
 
-    displayPrefixTable(showObject, true);
-
-    // Red black, Blue brown, Yellow crimson, Green orange
-    // Purple pink, Violet white, White white
-    $('#prefix_colour').change(function() {
-        // Make sure the preview is displayed
-        if ($('#prefixColourPreview').css('display') == 'none')
+        // If incorrect class remove the class.
+        if (jQuery(ele).hasClass(rowClassIncorrect))
         {
-            $('#prefixColourPreview').css('display', 'inline');
+            jQuery(ele).removeClass(rowClassIncorrect);
         }
 
-        $('#prefixColourPreview').css('background-color', '#' + $(this).val());
-    });
+        // If needed assign the new class
+        if (jQuery(ele).hasClass(rowClassCorrect) == false)
+        {
+            jQuery(ele).addClass(rowClassCorrect);
+        }
+    },
 
-    // Bind AJAX call to delete button
-    /*
-     * Doesn't work correctly atm
-    $('.delete-prefix').click(function() {
-        var prefID = $(this).parent().parent().attr('id');
+    hidePrefixTable: function(ele)
+    {
+        // Hide the options column
+        jQuery('thead > tr > th:gt(0)', ele).hide();
 
-        // Setup ajax call
-        $.ajax({
-            type    : 'POST',
-            url     : U_SUBJECT_PREFIX_AJAX_REQUEST + '&ajax_mode=delete',
-            data    : 'data=' + prefID,
-            success : function(html) {
-                // Show the message
-                if (html == 'success')
-                {
-                    // Hide this element
-                    $('#' + prefID).hide();
+        // Hide the body
+        jQuery('tbody', ele).hide();
+    },
 
-                    // No visable elements hide the forum table
-                    table = $('#' + prefID).parent().parent().parent();
-                    if ($('tr:visible', table).length < 1)
-                    {
-                        $(table).hide();
-                    }
-                    // Fix the table colouring
-                    else
-                    {
-                        $('tbody > tr', table).each(function(index) {
-                            fixColouring(this, index);
-                        });
-                    }
-                }
-            },
+    displayPrefixTable: function(ele, fromCookie)
+    {
+        // Hide all others
+        jQuery('#main > table').each(function(index) {
+            jQuery.subjectPrefix.hidePrefixTable(this);
         });
 
-       // Don't follow tha link
-       return false;
-    });
-     */
+        // Get the table
+        if (fromCookie != null)
+            var table = ele;
+        else
+            var table = jQuery(ele).parent().parent().parent();
+
+        // Display the options column
+        jQuery('thead > tr > th:gt(0)', table).show();
+
+        // Display the box
+        jQuery('tbody', table).show();
+
+        // I love rock n' roll
+        // So put another cookie in the jukebox, baby
+        // I love rock n' roll
+        // So come and take your time and dance with me
+        var selected = jQuery(table).attr('id');
+        jQuery.cookie(jQuery.subjectPrefix.cookieName, selected, { expires: 365, path: "/" });
+    }
+}
+
+jQuery.fn.extend(
+	{
+		subjectPrefix : jQuery.subjectPrefix.bind
+	}
+);
+
+$(document).ready(function() {
+    jQuery.subjectPrefix.bind();
 });
-
-function fixColouring(ele, index)
-{
-    rowClassCorrect	= (index % 2 == 0) ? 'row1' : 'row2';
-    rowClassIncorrect	= (index % 2 == 0) ? 'row2' : 'row1';
-
-    // If incorrect class remove the class.
-    if ($(ele).hasClass(rowClassIncorrect))
-    {
-        $(ele).removeClass(rowClassIncorrect);
-    }
-
-    // If needed assign the new class
-    if ($(ele).hasClass(rowClassCorrect) == false)
-    {
-        $(ele).addClass(rowClassCorrect);
-    }
-}
-
-function hidePrefixTable(ele)
-{
-    // Hide the options column
-    $('thead > tr > th:gt(0)', ele).hide();
-
-    // Hide the body
-    $('tbody', ele).hide();
-}
-
-function displayPrefixTable(ele, fromCookie)
-{
-    // Hide all others
-    $('#main > table').each(function(index) {
-        hidePrefixTable(this);
-    });
-
-    // Get the table
-    if (fromCookie != null)
-        var table = ele;
-    else
-        var table = $(ele).parent().parent().parent();
-
-    // Display the options column
-    $('thead > tr > th:gt(0)', table).show();
-
-    // Display the box
-    $('tbody', table).show();
-
-    // I love rock n' roll
-    // So put another cookie in the jukebox, baby
-    // I love rock n' roll
-    // So come and take your time and dance with me
-    var selected = $(table).attr('id');
-    $.cookie(cookieName, selected, { expires: 365, path: "/" });
-}
