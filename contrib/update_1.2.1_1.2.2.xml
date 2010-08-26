@@ -57,6 +57,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 				<rev-version>1.2.2</rev-version>
 				<changelog lang="en">
 					<change>Release subject prefix 1.2.2 to the CDB.</change>
+					<change>[Fix] #4 Fix open path in the subsilver2 installation file.</change>
 				</changelog>
 			</entry>
 			<entry>

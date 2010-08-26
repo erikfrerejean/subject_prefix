@@ -57,6 +57,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 				<rev-version>1.2.2</rev-version>
 				<changelog lang="en">
 					<change>Release subject prefix 1.2.2 to the CDB.</change>
+					<change>[Fix] #4 Fix open path in the subsilver2 installation file.</change>
 				</changelog>
 			</entry>
 			<entry>
@@ -136,7 +137,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 			</edit>
 		</open>
 
-		<open src="styles/subsilver2/template/posting_editor.html">
+		<open src="styles/subsilver2/template/posting_body.html">
 			<edit>
 				<find><![CDATA[<td class="row2" width="78%"><input class="post" style="width:450px" type="text" name="subject" size="45" maxlength="<!-- IF S_NEW_MESSAGE -->60<!-- ELSE -->64<!-- ENDIF -->" tabindex="2" value="{SUBJECT}" /></td>
 </tr>]]></find>
