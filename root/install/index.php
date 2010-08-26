@@ -19,10 +19,6 @@ $phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : './../';
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
 include($phpbb_root_path . 'common.' . $phpEx);
 
-// Tables
-define('SUBJECT_PREFIX_TABLE', $table_prefix . 'subject_prefixes');
-define('SUBJECT_PREFIX_FORUMS_TABLE', $table_prefix . 'subject_prefix_forums');
-
 $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
