@@ -59,6 +59,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 					<change>Release subject prefix 1.2.2 to the CDB.</change>
 					<change>[Fix] #3 Add more describing titles to the contrib .xml files.</change>
 					<change>[Fix] #4 Fix open path in the subsilver2 installation file.</change>
+					<change>[Fix] #5 Corrected installation instructions for the "phpBB SEO Title MOD" fix.</change>
 				</changelog>
 			</entry>
 			<entry>
