@@ -641,24 +641,13 @@ jQuery.subjectPrefix = {
     // The cookie name
     cookieName: 'acpprefixcollapsed',
 
-    bind: function()
+    /**
+     * Setup the subjectPrefix stuff
+     */
+    initSubjectPrefix: function()
     {
         // Hide all tables
-        jQuery('#main > table').each(function(index) {
-            jQuery.subjectPrefix.hidePrefixTable(this);
-
-            // Bind the onclick to the th
-            jQuery('thead > tr > th:first', this).click(function() {
-                jQuery.subjectPrefix.displayPrefixTable(this);
-            });
-
-            // The move buttons break due to the drag-drop stuff, disable them
-            jQuery('.moveButtons', this).remove();
-            jQuery('.moveButtons', this).parent().css('width', 40);
-
-            // Load drag drop
-            jQuery.subjectPrefix.initDragDrop(this);
-        });
+        jQuery.subjectPrefix.hideAllTables();
 
         // Can I haz cookie
         var showObject = null;
@@ -735,6 +724,25 @@ jQuery.subjectPrefix = {
         }
     },
 
+    hideAllTables: function()
+    {
+        jQuery('#main > table').each(function(index) {
+            jQuery.subjectPrefix.hidePrefixTable(this);
+
+            // Bind the onclick to the th
+            jQuery('thead > tr > th:first', this).click(function() {
+                jQuery.subjectPrefix.displayPrefixTable(this);
+            });
+
+            // The move buttons break due to the drag-drop stuff, disable them
+            jQuery('.moveButtons', this).remove();
+            jQuery('.moveButtons', this).parent().css('width', 40);
+
+            // Load drag drop
+            jQuery.subjectPrefix.initDragDrop(this);
+        });
+    },
+
     hidePrefixTable: function(ele)
     {
         // Hide the options column
@@ -772,12 +780,6 @@ jQuery.subjectPrefix = {
     }
 }
 
-jQuery.fn.extend(
-	{
-		subjectPrefix : jQuery.subjectPrefix.bind
-	}
-);
-
 $(document).ready(function() {
-    jQuery.subjectPrefix.bind();
+    jQuery.subjectPrefix.initSubjectPrefix();
 });
