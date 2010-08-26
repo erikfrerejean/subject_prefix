@@ -677,6 +677,10 @@ jQuery.subjectPrefix = {
         });
     },
 
+    /**
+     * Initialise the drag drop framework on a forum table
+     * @param The table object on which the drag drop will be invoken
+     */
     initDragDrop: function(table)
     {
         // Init drag-drop
@@ -702,12 +706,18 @@ jQuery.subjectPrefix = {
         });
     },
 
+    /**
+     * Is called when the AJAX requests returns a result
+     */
     dragDropSuccess: function(html) {
         // Show the message
         if (html == 'success')
             jQuery('.successbox').show();
     },
 
+    /**
+     * A method used to fix the row colours when they are moved around
+     */
     fixColouring: function(ele, index)
     {
         rowClassCorrect	= (index % 2 == 0) ? 'row1' : 'row2';
@@ -726,6 +736,9 @@ jQuery.subjectPrefix = {
         }
     },
 
+    /**
+     * Hide all forum tables
+     */
     hideAllTables: function()
     {
         jQuery('#main > table').each(function(index) {
@@ -745,6 +758,9 @@ jQuery.subjectPrefix = {
         });
     },
 
+    /**
+     * Hide one forum table
+     */
     hidePrefixTable: function(ele)
     {
         // Hide the options column
@@ -754,6 +770,9 @@ jQuery.subjectPrefix = {
         jQuery('tbody', ele).hide();
     },
 
+    /**
+     * Display the requested forum table
+     */
     displayPrefixTable: function(ele, fromCookie)
     {
         // Hide all others
@@ -782,6 +801,7 @@ jQuery.subjectPrefix = {
     }
 }
 
+// Load the javascript
 $(document).ready(function() {
     jQuery.subjectPrefix.initSubjectPrefix();
 });
