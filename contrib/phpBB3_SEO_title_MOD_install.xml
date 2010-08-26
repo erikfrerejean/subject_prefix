@@ -128,12 +128,11 @@
 		<!-- File edits -->
 		<open src="includes/mods/subject_prefix/sp_core.php">
 			<edit>
-				<find>abstract class sp_core
-{</find>
-				<action type="after-add"><![CDATA[	/**
-	 * Set to true when you've got the "PhpBB3 SEO Title" MOD installed (http://www.phpbb3bbcodes.com/viewtopic.php?f=8&t=300)
-	 */
-	const PHPBB3_SEO_TITLE_MOD = false;]]></action>
+				<find>const PHPBB3_SEO_TITLE_MOD = false;</find>
+				<inline-edit>
+					<inline-find>false</inline-find>
+					<inline-action type="replace-with">true</inline-action>
+				</inline-edit>
 			</edit>
 		</open>
 	</action-group>
