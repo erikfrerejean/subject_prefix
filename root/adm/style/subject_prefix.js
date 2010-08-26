@@ -641,24 +641,13 @@ jQuery.subjectPrefix = {
     // The cookie name
     cookieName: 'acpprefixcollapsed',
 
-    bind: function()
+    /**
+     * Setup the subjectPrefix stuff
+     */
+    initSubjectPrefix: function()
     {
         // Hide all tables
-        jQuery('#main > table').each(function(index) {
-            jQuery.subjectPrefix.hidePrefixTable(this);
-
-            // Bind the onclick to the th
-            jQuery('thead > tr > th:first', this).click(function() {
-                jQuery.subjectPrefix.displayPrefixTable(this);
-            });
-
-            // The move buttons break due to the drag-drop stuff, disable them
-            jQuery('.moveButtons', this).remove();
-            jQuery('.moveButtons', this).parent().css('width', 40);
-
-            // Load drag drop
-            jQuery.subjectPrefix.initDragDrop(this);
-        });
+        jQuery.subjectPrefix.hideAllTables();
 
         // Can I haz cookie
         var showObject = null;
@@ -678,16 +667,22 @@ jQuery.subjectPrefix = {
         // Red black, Blue brown, Yellow crimson, Green orange
         // Purple pink, Violet white, White white
         jQuery('#prefix_colour').change(function() {
+            $_prefixColourPreview = jQuery('#prefixColourPreview');
+
             // Make sure the preview is displayed
-            if (jQuery('#prefixColourPreview').css('display') == 'none')
+            if ($_prefixColourPreview.css('display') == 'none')
             {
-                jQuery('#prefixColourPreview').css('display', 'inline');
+                $_prefixColourPreview.css('display', 'inline');
             }
 
-            jQuery('#prefixColourPreview').css('background-color', '#' + jQuery(this).val());
+            $_prefixColourPreview.css('background-color', '#' + jQuery(this).val());
         });
     },
 
+    /**
+     * Initialise the drag drop framework on a forum table
+     * @param The table object on which the drag drop will be invoken
+     */
     initDragDrop: function(table)
     {
         // Init drag-drop
@@ -707,34 +702,70 @@ jQuery.subjectPrefix = {
                     type    : 'POST',
                     url     : U_SUBJECT_PREFIX_AJAX_REQUEST + '&ajax_mode=move&tablename=' + jQuery(table).attr('id'),
                     data    : jQuery.tableDnD.serialize(),
-                    success : function(html) {
-                        // Show the message
-                        if (html == 'success')
-                            jQuery('.successbox').show();
-                    }
+                    success : jQuery.subjectPrefix.dragDropSuccess
                 });
             }
         });
     },
 
+    /**
+     * Is called when the AJAX requests returns a result
+     */
+    dragDropSuccess: function(html) {
+        // Show the message
+        if (html == 'success')
+            jQuery('.successbox').show();
+    },
+
+    /**
+     * A method used to fix the row colours when they are moved around
+     */
     fixColouring: function(ele, index)
     {
         rowClassCorrect	= (index % 2 == 0) ? 'row1' : 'row2';
         rowClassIncorrect	= (index % 2 == 0) ? 'row2' : 'row1';
 
+        $_element = jQuery(ele);
+
         // If incorrect class remove the class.
-        if (jQuery(ele).hasClass(rowClassIncorrect))
+        if ($_element.hasClass(rowClassIncorrect))
         {
-            jQuery(ele).removeClass(rowClassIncorrect);
+            $_element.removeClass(rowClassIncorrect);
         }
 
         // If needed assign the new class
-        if (jQuery(ele).hasClass(rowClassCorrect) == false)
+        if ($_element.hasClass(rowClassCorrect) == false)
         {
-            jQuery(ele).addClass(rowClassCorrect);
+            $_element.addClass(rowClassCorrect);
         }
     },
 
+    /**
+     * Hide all forum tables
+     */
+    hideAllTables: function()
+    {
+        jQuery('#main > table').each(function(index) {
+            jQuery.subjectPrefix.hidePrefixTable(this);
+
+            // Bind the onclick to the th
+            jQuery('thead > tr > th:first', this).click(function() {
+                jQuery.subjectPrefix.displayPrefixTable(this);
+            });
+
+            // The move buttons break due to the drag-drop stuff, disable them
+            $_buttons = jQuery('.moveButtons', this);
+            $_buttons.remove();
+            $_buttons.parent().css('width', 40);
+
+            // Load drag drop
+            jQuery.subjectPrefix.initDragDrop(this);
+        });
+    },
+
+    /**
+     * Hide one forum table
+     */
     hidePrefixTable: function(ele)
     {
         // Hide the options column
@@ -744,6 +775,9 @@ jQuery.subjectPrefix = {
         jQuery('tbody', ele).hide();
     },
 
+    /**
+     * Display the requested forum table
+     */
     displayPrefixTable: function(ele, fromCookie)
     {
         // Hide all others
@@ -772,12 +806,7 @@ jQuery.subjectPrefix = {
     }
 }
 
-jQuery.fn.extend(
-	{
-		subjectPrefix : jQuery.subjectPrefix.bind
-	}
-);
-
+// Load the javascript
 $(document).ready(function() {
-    jQuery.subjectPrefix.bind();
+    jQuery.subjectPrefix.initSubjectPrefix();
 });
