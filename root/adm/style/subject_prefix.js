@@ -696,14 +696,16 @@ jQuery.subjectPrefix = {
                     type    : 'POST',
                     url     : U_SUBJECT_PREFIX_AJAX_REQUEST + '&ajax_mode=move&tablename=' + jQuery(table).attr('id'),
                     data    : jQuery.tableDnD.serialize(),
-                    success : function(html) {
-                        // Show the message
-                        if (html == 'success')
-                            jQuery('.successbox').show();
-                    }
+                    success : jQuery.subjectPrefix.dragDropSuccess
                 });
             }
         });
+    },
+
+    dragDropSuccess: function(html) {
+        // Show the message
+        if (html == 'success')
+            jQuery('.successbox').show();
     },
 
     fixColouring: function(ele, index)
