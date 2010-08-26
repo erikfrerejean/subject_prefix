@@ -24,6 +24,8 @@ class mcp_subject_prefix
 {
 	/**
 	* Main method, is called by p_master to run the module
+	* @param	String	$id		ID of the current module
+	* @param	String	$mode	Mode of the current page
 	*/
 	public function main($mode, $id)
 	{

@@ -21,10 +21,21 @@ if (!defined('IN_PHPBB'))
  */
 class acp_subject_prefix
 {
+	/**
+	 * @var String Formatted link (including SID) pointing to the current page
+	 */
 	public $u_action;
 
+	/**
+	 * @var Array Container for error messages
+	 */
 	private $error = array();
 
+	/**
+	 * Main method, is called by p_master to run the module
+	 * @param	String	$id		ID of the current module
+	 * @param	String	$mode	Mode of the current page
+	 */
 	public function main($id, $mode)
 	{
 		global $phpbb_admin_path;	// Anoyingly can't use a constant due to phpBB :/
