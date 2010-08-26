@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * info_acp_subject_prefix [English]
+ * permissions_subject_prefix [English]
  *
  * @package language
  * @copyright (c) 2010 Erik Frèrejean ( erikfrerejean@phpbb.com ) http://www.erikfrerejean.nl

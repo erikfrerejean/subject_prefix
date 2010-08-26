@@ -52,7 +52,7 @@ $version_config_name = 'subject_prefix_version';
 * 'UNINSTALL_' . $mod_name
 * 'UNINSTALL_' . $mod_name . '_CONFIRM'
 */
-$language_file = 'mods/subject_prefix/subject_prefix_common';
+$language_file = 'mods/subject_prefix/subject_prefix_install';
 
 // Get version info
 include($phpbb_root_path . 'install/install_data.' . $phpEx);
