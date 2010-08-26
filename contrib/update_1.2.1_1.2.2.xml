@@ -58,6 +58,7 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 				<changelog lang="en">
 					<change>Release subject prefix 1.2.2 to the CDB.</change>
 					<change>[Fix] #3 Add more describing titles to the contrib .xml files.</change>
+					<change>[Fix] #4 Fix open path in the subsilver2 installation file.</change>
 				</changelog>
 			</entry>
 			<entry>
