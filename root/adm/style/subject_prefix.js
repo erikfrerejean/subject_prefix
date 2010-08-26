@@ -667,13 +667,15 @@ jQuery.subjectPrefix = {
         // Red black, Blue brown, Yellow crimson, Green orange
         // Purple pink, Violet white, White white
         jQuery('#prefix_colour').change(function() {
+            $_prefixColourPreview = jQuery('#prefixColourPreview');
+
             // Make sure the preview is displayed
-            if (jQuery('#prefixColourPreview').css('display') == 'none')
+            if ($_prefixColourPreview.css('display') == 'none')
             {
-                jQuery('#prefixColourPreview').css('display', 'inline');
+                $_prefixColourPreview.css('display', 'inline');
             }
 
-            jQuery('#prefixColourPreview').css('background-color', '#' + jQuery(this).val());
+            $_prefixColourPreview.css('background-color', '#' + jQuery(this).val());
         });
     },
 
@@ -723,16 +725,18 @@ jQuery.subjectPrefix = {
         rowClassCorrect	= (index % 2 == 0) ? 'row1' : 'row2';
         rowClassIncorrect	= (index % 2 == 0) ? 'row2' : 'row1';
 
+        $_element = jQuery(ele);
+
         // If incorrect class remove the class.
-        if (jQuery(ele).hasClass(rowClassIncorrect))
+        if ($_element.hasClass(rowClassIncorrect))
         {
-            jQuery(ele).removeClass(rowClassIncorrect);
+            $_element.removeClass(rowClassIncorrect);
         }
 
         // If needed assign the new class
-        if (jQuery(ele).hasClass(rowClassCorrect) == false)
+        if ($_element.hasClass(rowClassCorrect) == false)
         {
-            jQuery(ele).addClass(rowClassCorrect);
+            $_element.addClass(rowClassCorrect);
         }
     },
 
@@ -750,8 +754,9 @@ jQuery.subjectPrefix = {
             });
 
             // The move buttons break due to the drag-drop stuff, disable them
-            jQuery('.moveButtons', this).remove();
-            jQuery('.moveButtons', this).parent().css('width', 40);
+            $_buttons = jQuery('.moveButtons', this);
+            $_buttons.remove();
+            $_buttons.parent().css('width', 40);
 
             // Load drag drop
             jQuery.subjectPrefix.initDragDrop(this);
