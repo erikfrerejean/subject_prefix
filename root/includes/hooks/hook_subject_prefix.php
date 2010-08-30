@@ -166,6 +166,12 @@ abstract class sp_hook
 			), $key = $last_post_ids[$row['topic_last_post_id']], 'change');
 		}
 		sp_phpbb::$db->sql_freeresult($result);
+
+		// Forums with a subforum are handled kinda funky, componsate for it.
+		if (!empty(sp_phpbb::$template->_tpldata['topicrow']))
+		{
+			self::add_to_viewforum();
+		}
 	}
 
 	/**
