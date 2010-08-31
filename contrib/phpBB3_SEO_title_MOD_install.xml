@@ -55,7 +55,7 @@
 				<date>0000-00-00</date>
 				<rev-version>1.2.2</rev-version>
 				<changelog lang="en">
-					<change>Release subject prefix 1.2.2 to the CDB.</change>
+					<change>[Fix] #8 Search results don't show prefixes correctly.</change>
 				</changelog>
 			</entry>
 			<entry>

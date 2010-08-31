@@ -231,12 +231,12 @@ abstract class sp_hook
 			}
 			else
 			{
-				if (empty($data['TOPIC_ID']))
+				if (empty($data['POST_ID']))
 				{
 					continue;
 				}
 
-				$row_id[$row] = $data['TOPIC_ID'];
+				$row_id[$row] = $data['POST_ID'];
 			}
 		}
 
@@ -247,19 +247,34 @@ abstract class sp_hook
 		}
 
 		// Fetch the prefixes
-		$sql = 'SELECT topic_id, subject_prefix_id
-			FROM ' . TOPICS_TABLE . '
-			WHERE ' . sp_phpbb::$db->sql_in_set('topic_id', $row_id);
+		$sql = $key = '';
+		switch ($sr)
+		{
+			case 'topics' :
+				$sql = 'SELECT topic_id, subject_prefix_id
+					FROM ' . TOPICS_TABLE . '
+					WHERE ' . sp_phpbb::$db->sql_in_set('topic_id', $row_id);
+				$key = 'topic_id';
+			break;
+
+			default :
+				$sql = 'SELECT p.post_id, t.topic_id, t.subject_prefix_id
+					FROM (' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t)
+					WHERE ' . sp_phpbb::$db->sql_in_set('p.post_id', $row_id) . '
+						AND t.topic_id = p.topic_id';
+				$key = 'post_id';
+				$field = '';
+		}
 		$result = sp_phpbb::$db->sql_query($sql);
 		$row_id = array_flip($row_id);
 		while ($row = sp_phpbb::$db->sql_fetchrow($result))
 		{
-			$topic_title = sp_core::generate_prefix_string($row['subject_prefix_id']) . ' ' . sp_phpbb::$template->_tpldata['searchresults'][$row_id[$row['topic_id']]]['TOPIC_TITLE'];
+			$topic_title = sp_core::generate_prefix_string($row['subject_prefix_id']) . ' ' . sp_phpbb::$template->_tpldata['searchresults'][$row_id[$row[$key]]]['TOPIC_TITLE'];
 
 			// Update the template
 			sp_phpbb::$template->alter_block_array('searchresults', array(
 				'TOPIC_TITLE' => $topic_title,
-			), $row_id[$row['topic_id']], 'change');
+			), $row_id[$row[$key]], 'change');
 		}
 		sp_phpbb::$db->sql_freeresult($result);
 	}
