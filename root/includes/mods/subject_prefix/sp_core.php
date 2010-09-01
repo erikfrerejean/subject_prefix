@@ -20,6 +20,15 @@ if (!defined('IN_PHPBB'))
  */
 abstract class sp_core
 {
+	/**
+	 * Set to true when you've got the "PhpBB3 SEO Title" MOD installed (http://www.phpbb3bbcodes.com/viewtopic.php?f=8&t=300)
+	 */
+	const PHPBB3_SEO_TITLE_MOD = false;
+
+	/**
+	 * Initialise the Subject Prefix core
+	 * @return void
+	 */
 	static public function init()
 	{
 		// Define the database tables
@@ -76,7 +85,7 @@ abstract class sp_core
 	 */
 	static public function generate_prefix_string($pid, $markup = true)
 	{
-		static $formatted	= '<span style="color: #%s">%s</span>';
+		static $formatted	= '<span style="color: #%s; display: inline;">%s</span>';
 		static $unformatted	= '%s';
 
 		$prefixes = sp_phpbb::$cache->obtain_subject_prefixes();
@@ -84,7 +93,7 @@ abstract class sp_core
 		// Doesn't exist
 		if (!isset($prefixes[$pid]))
 		{
-			return;
+			return false;
 		}
 
 		$prefix_title = (isset(sp_phpbb::$user->lang['SP_' . $prefixes[$pid]['title']])) ? sp_phpbb::$user->lang['SP_' . $prefixes[$pid]['title']] : $prefixes[$pid]['title'];
@@ -141,6 +150,15 @@ abstract class sp_core
 		return $pid;
 	}
 
+	/**
+	 * Update a given prefix
+	 * @param	Integer	$pid			The ID of the prefix that will be updated
+	 * @param	String	$prefix_title	The new prefix title
+	 * @param	String	$prefix_colour	The new prefix colour
+	 * @param	Array	$forums			The forums in which this prefix can be used
+	 * @param	Array	&$error			Array that will store any error messages
+	 * @return	void
+	 */
 	static public function prefix_update($pid, $prefix_title, $prefix_colour, $forums, &$error)
 	{
 		if ($pid == 0)
@@ -380,6 +398,13 @@ abstract class sp_core
 		sp_phpbb::$db->sql_multi_insert(SUBJECT_PREFIX_FORUMS_TABLE, $insert_data);
 	}
 
+	/**
+	 * Validate input. This is used to make sure that the provided prefix data can be
+	 * handled.
+	 * @param	String	$prefix_title	The prefix title
+	 * @param	String	$prefix_colour	The prefix colour
+	 * @return	Array	Array containing all found errors (empty if non found)
+	 */
 	static private function _validate_input($prefix_title, $prefix_colour)
 	{
 		$error = array();
@@ -396,3 +421,6 @@ abstract class sp_core
 		return $error;
 	}
 }
+
+// Init
+sp_core::init();
