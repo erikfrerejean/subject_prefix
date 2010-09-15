@@ -274,10 +274,10 @@ abstract class sp_hook
 	}
 
 	/**
-	 * Add the prefix to UPC
+	 * Add the prefix to UCP
 	 * @return void
 	 */
-	static private function add_to_upc()
+	static private function add_to_ucp()
 	{
 		// Bookmarks and subscriptions
 		if (!empty(sp_phpbb::$template->_tpldata['topicrow']))
