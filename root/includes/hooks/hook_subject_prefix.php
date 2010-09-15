@@ -15,12 +15,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-// When the MOD isn't installed, we won't bother here ^^
-if (!isset($config['subject_prefix_version']))
-{
-	return;
-}
-
 /**
  * Class that contains all hooked methods
  */
