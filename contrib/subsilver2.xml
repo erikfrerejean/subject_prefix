@@ -160,5 +160,13 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 				<action type="after-add"><![CDATA[<!-- INCLUDE mods/subject_prefix/subject_prefix.html -->]]></action>
 			</edit>
 		</open>
+
+		<!-- DIY -->
+		<diy-instructions lang="en">Refresh the template
+	* ACP
+	* STYLES
+	* Templates
+	* Click on refresh next to "subsilver2"
+</diy-instructions>
 	</action-group>
 </mod>
