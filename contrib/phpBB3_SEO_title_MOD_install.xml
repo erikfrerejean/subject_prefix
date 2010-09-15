@@ -42,7 +42,7 @@
 			</author>
 		</author-group>
 
-		<mod-version>1.2.2</mod-version>
+		<mod-version>1.2.3</mod-version>
 
 		<installation>
 			<level>easy</level>
@@ -51,6 +51,17 @@
 		</installation>
 
 		<history>
+			<entry>
+				<date>2010-09-15</date>
+				<rev-version>1.2.3</rev-version>
+				<changelog lang="en">
+					<change>[Add] DIY instructions to the subsilver2 install file.</change>
+					<change>[Add] Instructions to run the installer when updating.</change>
+					<change>[Fix] The installer couldn't run when the MOD was *installed*.</change>
+					<change>[Fix] A typo that prevented the prefixes from being displayed in the UCP.</change>
+					<change>[Fix] #9 The Quick Change box didn't work when the prefix was added to a global announcement.</change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2010-09-01</date>
 				<rev-version>1.2.2</rev-version>
