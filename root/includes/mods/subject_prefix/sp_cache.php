@@ -15,6 +15,11 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
+if (defined('IN_INSTALL'))
+{
+	return;
+}
+
 if (!class_exists('acm'))
 {
 	require PHPBB_ROOT_PATH . 'includes/acm/acm_' . $acm_type . '.' . PHP_EXT;
