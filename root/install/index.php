@@ -19,15 +19,15 @@ $phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : './../';
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
 include($phpbb_root_path . 'common.' . $phpEx);
 
-$user->session_begin();
-$auth->acl($user->data);
-$user->setup();
-
 // Make sure that the hook is loaded.
 if (!class_exists('sp_hook'))
 {
 	include($phpbb_root_path . 'includes/hooks/hook_subject_prefix.' . $phpEx);
 }
+
+$user->session_begin();
+$auth->acl($user->data);
+$user->setup();
 
 if (!file_exists($phpbb_root_path . 'umil/umil_auto.' . $phpEx))
 {

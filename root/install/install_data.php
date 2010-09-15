@@ -133,4 +133,23 @@ $versions = array(
 	'1.2.2-rc1'	=> array(), // No database changes
 	'1.2.2-rc2'	=> array(), // No database changes
 	'1.2.2'		=> array(), // No database changes
+	'1.2.3'		=> array(
+		// Update auth string
+		'custom'	=> array(
+			'_alter_mcp_quick_edit_auth',
+		),
+	),
 );
+
+function _alter_mcp_quick_edit_auth($action, $version)
+{
+	global $umil;
+
+	// Only when updating
+	if ($action == 'update' && $version == '1.2.3')
+	{
+		// Set the new auth string
+		$new_auth_string = 'acl_m_subject_prefix,$id || (!$id && aclf_m_)';
+		$umil->db->sql_query('UPDATE ' . MODULES_TABLE . " SET module_auth = '{$new_auth_string}' WHERE module_basename = 'subject_prefix' AND module_mode = 'quick_edit'");
+	}
+}
