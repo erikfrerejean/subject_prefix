@@ -141,5 +141,8 @@ This MOD was developed for php 5.2.0 and above, it might work on any other php 5
 		<delete>
 			<file name="sp_ajax.php" />
 		</delete>
+
+		<!-- Installer -->
+		<php-installer>install/index.php</php-installer>
 	</action-group>
 </mod>
